@@ -122,11 +122,11 @@
             // 
             this.lblPalabra.AutoSize = true;
             this.lblPalabra.BackColor = System.Drawing.Color.Transparent;
-            this.lblPalabra.Font = new System.Drawing.Font("CF Crayons", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPalabra.Font = new System.Drawing.Font("CF Crayons", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPalabra.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblPalabra.Location = new System.Drawing.Point(528, 171);
+            this.lblPalabra.Location = new System.Drawing.Point(504, 180);
             this.lblPalabra.Name = "lblPalabra";
-            this.lblPalabra.Size = new System.Drawing.Size(302, 35);
+            this.lblPalabra.Size = new System.Drawing.Size(254, 33);
             this.lblPalabra.TabIndex = 90;
             this.lblPalabra.Text = "_ _ _ _ _ _ _ _ _ _";
             // 

@@ -85,7 +85,7 @@
             // txtUsuario
             // 
             this.txtUsuario.BackColor = System.Drawing.SystemColors.Control;
-            this.txtUsuario.ForeColor = System.Drawing.Color.Transparent;
+            this.txtUsuario.ForeColor = System.Drawing.Color.DimGray;
             this.txtUsuario.Location = new System.Drawing.Point(624, 247);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(189, 20);
@@ -94,7 +94,7 @@
             // txtContrasena
             // 
             this.txtContrasena.BackColor = System.Drawing.SystemColors.Control;
-            this.txtContrasena.ForeColor = System.Drawing.Color.Transparent;
+            this.txtContrasena.ForeColor = System.Drawing.Color.DimGray;
             this.txtContrasena.Location = new System.Drawing.Point(624, 295);
             this.txtContrasena.Name = "txtContrasena";
             this.txtContrasena.Size = new System.Drawing.Size(189, 20);

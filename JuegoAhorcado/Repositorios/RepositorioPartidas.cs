@@ -18,14 +18,16 @@ namespace JuegoAhorcado.Repositorios
             conn.Open();
 
             string sql = @"INSERT INTO partidas 
-                           (usuario_id, palabra_id, resultado, puntuacion, fecha)
-                           VALUES (@usuario_id, @palabra_id, @resultado, @puntuacion, @fecha)";
+                           (usuario_id, palabra_id, resultado, puntuacion_obtenida, fecha)
+                           VALUES (@usuario_id, @palabra_id, @resultado, @puntuacion_obtenida, @fecha)";
 
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@usuario_id", partida.UsuarioId);
             cmd.Parameters.AddWithValue("@palabra_id", partida.PalabraId);
             cmd.Parameters.AddWithValue("@resultado", partida.Resultado);
-            cmd.Parameters.AddWithValue("@puntuacion", partida.PuntuacionObtenida);
+
+            cmd.Parameters.AddWithValue("@puntuacion_obtenida", partida.PuntuacionObtenida);
+
             cmd.Parameters.AddWithValue("@fecha", partida.Fecha);
 
             cmd.ExecuteNonQuery();
@@ -41,8 +43,8 @@ namespace JuegoAhorcado.Repositorios
                 conn.Open();
 
                 string sql = @"SELECT * FROM partidas 
-                       WHERE usuario_id = @usuario_id
-                       ORDER BY fecha DESC";
+                               WHERE usuario_id = @usuario_id
+                               ORDER BY fecha DESC";
 
                 using (var cmd = new MySqlCommand(sql, conn))
                 {
@@ -58,7 +60,10 @@ namespace JuegoAhorcado.Repositorios
                                 UsuarioId = reader.GetInt32("usuario_id"),
                                 PalabraId = reader.GetInt32("palabra_id"),
                                 Resultado = reader.GetString("resultado"),
-                                PuntuacionObtenida = reader.GetInt32("puntuacion_obtenida"), // AJUSTAR AQUÍ
+
+                                // Lectura correcta del campo real de la BD
+                                PuntuacionObtenida = reader.GetInt32("puntuacion_obtenida"),
+
                                 Fecha = reader.GetDateTime("fecha")
                             });
                         }

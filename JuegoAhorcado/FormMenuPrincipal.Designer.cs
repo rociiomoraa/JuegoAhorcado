@@ -93,7 +93,7 @@
             this.btnJugar.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnJugar.ForeColor = System.Drawing.SystemColors.Control;
             this.btnJugar.Location = new System.Drawing.Point(570, 356);
-            this.btnJugar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnJugar.Margin = new System.Windows.Forms.Padding(2);
             this.btnJugar.Name = "btnJugar";
             this.btnJugar.Size = new System.Drawing.Size(116, 30);
             this.btnJugar.TabIndex = 96;
@@ -113,7 +113,7 @@
             this.btnAdministracion.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdministracion.ForeColor = System.Drawing.SystemColors.Control;
             this.btnAdministracion.Location = new System.Drawing.Point(431, 356);
-            this.btnAdministracion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAdministracion.Margin = new System.Windows.Forms.Padding(2);
             this.btnAdministracion.Name = "btnAdministracion";
             this.btnAdministracion.Size = new System.Drawing.Size(128, 30);
             this.btnAdministracion.TabIndex = 97;
@@ -133,7 +133,7 @@
             this.btnPerfil.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPerfil.ForeColor = System.Drawing.SystemColors.Control;
             this.btnPerfil.Location = new System.Drawing.Point(698, 356);
-            this.btnPerfil.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPerfil.Margin = new System.Windows.Forms.Padding(2);
             this.btnPerfil.Name = "btnPerfil";
             this.btnPerfil.Size = new System.Drawing.Size(116, 30);
             this.btnPerfil.TabIndex = 98;
@@ -153,7 +153,7 @@
             this.btnHistorial.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHistorial.ForeColor = System.Drawing.SystemColors.Control;
             this.btnHistorial.Location = new System.Drawing.Point(500, 411);
-            this.btnHistorial.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnHistorial.Margin = new System.Windows.Forms.Padding(2);
             this.btnHistorial.Name = "btnHistorial";
             this.btnHistorial.Size = new System.Drawing.Size(116, 30);
             this.btnHistorial.TabIndex = 99;
@@ -173,7 +173,7 @@
             this.btnCerrarSesion.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCerrarSesion.ForeColor = System.Drawing.SystemColors.Control;
             this.btnCerrarSesion.Location = new System.Drawing.Point(644, 411);
-            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrarSesion.Name = "btnCerrarSesion";
             this.btnCerrarSesion.Size = new System.Drawing.Size(122, 30);
             this.btnCerrarSesion.TabIndex = 100;
@@ -185,7 +185,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(-44, 37);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(542, 457);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -207,8 +207,9 @@
             this.Controls.Add(this.lblBienvenida);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMenuPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormMenuPrincipal";
             this.Load += new System.EventHandler(this.FormMenuPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -65,9 +65,9 @@ namespace JuegoAhorcado
         private void btnPerfil_Click(object sender, EventArgs e)
         {
             // Se accede al formulario del perfil del usuario.
-            FormPerfilUsuario formPerfil = new FormPerfilUsuario(sesion);
-            formPerfil.Show();
-            this.Hide();
+            //FormPerfilUsuario formPerfil = new FormPerfilUsuario(sesion);
+            //formPerfil.Show();
+            //this.Hide();
         }
 
         private void btnHistorial_Click(object sender, EventArgs e)
@@ -81,7 +81,7 @@ namespace JuegoAhorcado
         private void btnAdministracion_Click(object sender, EventArgs e)
         {
             // Solo disponible para administradores.
-            FormAdministracion formAdmin = new FormAdministracion(sesion);
+            FormAdmin formAdmin = new FormAdmin(sesion);
             formAdmin.Show();
             this.Hide();
         }

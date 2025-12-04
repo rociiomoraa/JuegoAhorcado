@@ -14,11 +14,10 @@ namespace JuegoAhorcado
 {
     public partial class FormInicioSesion : Form
     {
-        // Instancia del servicio encargado de validar usuarios contra la base de datos.
-        // Se mantiene a nivel de clase para reutilizarlo sin recrearlo en cada llamada.
+        // Servicio encargado de validar usuarios contra la base de datos.
         private ServicioUsuarios servicioUsuarios = new ServicioUsuarios();
 
-        // Servicio que gestiona la sesión del jugador activo durante toda la ejecución.
+        // Servicio que mantiene al usuario logueado durante la aplicación.
         private ServicioSesionJugador servicioSesion = new ServicioSesionJugador();
 
         public FormInicioSesion()
@@ -28,55 +27,47 @@ namespace JuegoAhorcado
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            // Se obtiene el nombre de usuario y la contraseña introducidos.
             string nombre = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
 
-            // Validación inicial: se comprueba que ningún campo esté vacío.
+            // Validación de campos vacíos
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(contrasena))
             {
-                MessageBox.Show("Introduce usuario y contraseña.", "Aviso",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Introduce usuario y contraseña.",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Se intenta iniciar sesión a través del servicio.
+            // Intento de inicio de sesión contra la base de datos
             Usuario usuario = servicioUsuarios.IniciarSesion(nombre, contrasena);
 
-            // Si el usuario no existe o la contraseña no coincide, se informa al usuario.
             if (usuario == null)
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Usuario o contraseña incorrectos.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Si las credenciales son válidas, se registra al usuario en la sesión activa.
+            // Registrar la sesión activa
             servicioSesion.IniciarSesion(usuario);
 
-            // A continuación, se abre el formulario principal del sistema.
-            //FormMenuPrincipal menu = new FormMenuPrincipal(servicioSesion);
-           // menu.Show();
+            // Abrir el menú principal y pasarle la sesión
+            FormMenuPrincipal menu = new FormMenuPrincipal(servicioSesion);
+            menu.Show();
 
-            // El formulario de inicio de sesión no se cierra, sino que se oculta.
-            // Esto evita finalizar la aplicación si es el formulario inicial.
+            // Ocultar este formulario
             this.Hide();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            // Al volver, se muestra nuevamente la pantalla de bienvenida.
-            // Este comportamiento mantiene la coherencia del flujo de navegación.
             FormInicio inicio = new FormInicio();
             inicio.Show();
-
-            // De nuevo, se oculta el formulario actual para mantener la aplicación activa.
             this.Hide();
         }
 
         private void FormInicioSesion_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

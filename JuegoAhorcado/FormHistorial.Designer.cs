@@ -31,7 +31,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.dgvHistorial = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Palabra = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,7 +55,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("CF Crayons", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(224, 24);
+            this.label1.Location = new System.Drawing.Point(224, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(431, 45);
             this.label1.TabIndex = 2;
@@ -69,31 +68,18 @@
             this.panel1.Controls.Add(this.lblPerdidas);
             this.panel1.Controls.Add(this.lblGanadas);
             this.panel1.Controls.Add(this.lblTotalPartidas);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(27, 87);
+            this.panel1.Location = new System.Drawing.Point(27, 93);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(831, 84);
+            this.panel1.Size = new System.Drawing.Size(831, 44);
             this.panel1.TabIndex = 3;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.dgvHistorial);
-            this.panel2.Location = new System.Drawing.Point(27, 177);
+            this.panel2.Location = new System.Drawing.Point(27, 143);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(831, 286);
+            this.panel2.Size = new System.Drawing.Size(831, 309);
             this.panel2.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("CF Crayons", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Control;
-            this.label2.Location = new System.Drawing.Point(12, 31);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 29);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "ESTADÍSTICAS";
             // 
             // dgvHistorial
             // 
@@ -113,7 +99,7 @@
             this.dgvHistorial.Name = "dgvHistorial";
             this.dgvHistorial.ReadOnly = true;
             this.dgvHistorial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHistorial.Size = new System.Drawing.Size(796, 262);
+            this.dgvHistorial.Size = new System.Drawing.Size(796, 280);
             this.dgvHistorial.TabIndex = 7;
             // 
             // ID
@@ -158,7 +144,7 @@
             this.lblTotalPartidas.BackColor = System.Drawing.Color.Transparent;
             this.lblTotalPartidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalPartidas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTotalPartidas.Location = new System.Drawing.Point(201, 13);
+            this.lblTotalPartidas.Location = new System.Drawing.Point(25, 17);
             this.lblTotalPartidas.Name = "lblTotalPartidas";
             this.lblTotalPartidas.Size = new System.Drawing.Size(108, 19);
             this.lblTotalPartidas.TabIndex = 103;
@@ -170,7 +156,7 @@
             this.lblGanadas.BackColor = System.Drawing.Color.Transparent;
             this.lblGanadas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGanadas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblGanadas.Location = new System.Drawing.Point(422, 13);
+            this.lblGanadas.Location = new System.Drawing.Point(201, 17);
             this.lblGanadas.Name = "lblGanadas";
             this.lblGanadas.Size = new System.Drawing.Size(67, 19);
             this.lblGanadas.TabIndex = 104;
@@ -182,7 +168,7 @@
             this.lblPerdidas.BackColor = System.Drawing.Color.Transparent;
             this.lblPerdidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPerdidas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblPerdidas.Location = new System.Drawing.Point(637, 13);
+            this.lblPerdidas.Location = new System.Drawing.Point(353, 17);
             this.lblPerdidas.Name = "lblPerdidas";
             this.lblPerdidas.Size = new System.Drawing.Size(66, 19);
             this.lblPerdidas.TabIndex = 105;
@@ -194,7 +180,7 @@
             this.lblAcierto.BackColor = System.Drawing.Color.Transparent;
             this.lblAcierto.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAcierto.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblAcierto.Location = new System.Drawing.Point(300, 50);
+            this.lblAcierto.Location = new System.Drawing.Point(508, 17);
             this.lblAcierto.Name = "lblAcierto";
             this.lblAcierto.Size = new System.Drawing.Size(59, 19);
             this.lblAcierto.TabIndex = 106;
@@ -206,7 +192,7 @@
             this.lblRachaMaxima.BackColor = System.Drawing.Color.Transparent;
             this.lblRachaMaxima.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRachaMaxima.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblRachaMaxima.Location = new System.Drawing.Point(525, 50);
+            this.lblRachaMaxima.Location = new System.Drawing.Point(662, 17);
             this.lblRachaMaxima.Name = "lblRachaMaxima";
             this.lblRachaMaxima.Size = new System.Drawing.Size(102, 19);
             this.lblRachaMaxima.TabIndex = 107;
@@ -223,7 +209,7 @@
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVolver.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnVolver.Location = new System.Drawing.Point(402, 478);
+            this.btnVolver.Location = new System.Drawing.Point(408, 469);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(2);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(105, 31);
@@ -258,7 +244,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Palabra;

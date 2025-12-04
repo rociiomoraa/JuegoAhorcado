@@ -34,19 +34,9 @@ namespace JuegoAhorcado
             lblRachaActual.Text = "Racha actual: 0";
             lblRachaMaxima.Text = "Racha máxima: " + sesion.UsuarioActual.RachaMaxima;
 
-            cbCategorias.Items.Clear();
-
             var categorias = repoCategorias.ObtenerTodas();
 
-            foreach (var cat in categorias)
-            {
-                cbCategorias.Items.Add(new
-                {
-                    Nombre = cat.Nombre,
-                    Id = cat.Id
-                });
-            }
-
+            cbCategorias.DataSource = categorias;
             cbCategorias.DisplayMember = "Nombre";
             cbCategorias.ValueMember = "Id";
 
@@ -88,18 +78,20 @@ namespace JuegoAhorcado
             if (cbCategorias.SelectedItem == null)
             {
                 MessageBox.Show("Debes seleccionar una categoría para comenzar la partida.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int categoriaId = (int)cbCategorias.SelectedValue;
+            // SOLUCIÓN DEFINITIVA PARA OBJETOS ANÓNIMOS
+            var item = cbCategorias.SelectedItem;
+            int categoriaId = (int)item.GetType().GetProperty("Id").GetValue(item, null);
 
             palabraElegida = repoPalabras.ObtenerAleatoria(categoriaId);
 
             if (palabraElegida == null)
             {
                 MessageBox.Show("No hay palabras disponibles en esta categoría.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -110,7 +102,6 @@ namespace JuegoAhorcado
             panelDibujo.Invalidate();
         }
 
-
         private void ActualizarPantalla()
         {
             if (palabraElegida.Palabra.Contains(" "))
@@ -118,9 +109,9 @@ namespace JuegoAhorcado
             else
                 lblPalabra.Text = juego.PalabraOculta;
 
-            lblAciertos.Text = juego.Aciertos.ToString();
-            lblErrores.Text = juego.Errores.ToString();
-            lblPuntuacion.Text = juego.ObtenerPuntuacion().ToString();
+            lblAciertos.Text = "Aciertos: " + juego.Aciertos.ToString();
+            lblErrores.Text = "Errores: " + juego.Errores.ToString();
+            lblPuntuacion.Text = "Puntuación: " + juego.ObtenerPuntuacion().ToString();
 
             lblRachaActual.Text = "Racha actual: " + rachaVictorias;
             lblRachaMaxima.Text = "Racha máxima: " + sesion.UsuarioActual.RachaMaxima;
@@ -263,9 +254,9 @@ namespace JuegoAhorcado
             palabraElegida = null;
 
             lblPalabra.Text = "";
-            lblAciertos.Text = "0";
-            lblErrores.Text = "0";
-            lblPuntuacion.Text = "0";
+            lblAciertos.Text = "Aciertos:";
+            lblErrores.Text = "Errores:";
+            lblPuntuacion.Text = "Puntuación: ";
 
             lblRachaActual.Text = "Racha actual: " + rachaVictorias;
             lblRachaMaxima.Text = "Racha máxima: " + sesion.UsuarioActual.RachaMaxima;

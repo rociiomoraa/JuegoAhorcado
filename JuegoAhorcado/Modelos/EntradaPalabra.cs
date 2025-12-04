@@ -11,5 +11,6 @@ namespace JuegoAhorcado.Modelos
         public int Id { get; set; }
         public string Palabra { get; set; }
         public int CategoriaId { get; set; }
+        public string CategoriaNombre { get; set; }
     }
 }

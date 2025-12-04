@@ -82,19 +82,30 @@ namespace JuegoAhorcado.Motor
 
         private void RevelarLetra(char letra)
         {
-            char[] actual = PalabraOculta.Replace(" ", "").ToCharArray();
-            char[] original = PalabraOriginal.Palabra.ToUpper().ToCharArray();
+            string original = PalabraOriginal.Palabra.ToUpper();
+            string sinEspacios = PalabraOculta.Replace(" ", "");
 
-            for (int i = 0; i < original.Length; i++)
+            char[] actual = sinEspacios.ToCharArray();
+            char[] originalChars = original.ToCharArray();
+
+            int indexOculta = 0;
+
+            for (int i = 0; i < originalChars.Length; i++)
             {
-                if (original[i] == letra)
+                if (originalChars[i] == ' ')
                 {
-                    actual[i] = letra;
+                    continue;
                 }
+
+                if (originalChars[i] == letra)
+                    actual[indexOculta] = letra;
+
+                indexOculta++;
             }
 
             PalabraOculta = string.Join(" ", actual);
         }
+
 
 
         private void Finalizar()
@@ -121,7 +132,7 @@ namespace JuegoAhorcado.Motor
         public string ObtenerPalabraOcultaMultilinea()
         {
             string sinEspacios = PalabraOculta.Replace(" ", "");
-            return string.Join("\n", sinEspacios.ToCharArray());
+            return string.Join(Environment.NewLine, sinEspacios.ToCharArray());
         }
 
 
