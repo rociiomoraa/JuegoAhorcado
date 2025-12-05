@@ -25,7 +25,6 @@ namespace JuegoAhorcado
 
         private void FormPerfilUsuario_Load_1(object sender, EventArgs e)
         {
-            // Cargar datos del usuario desde BD
             var usuario = repoUsuarios.ObtenerPorId(sesion.UsuarioActual.Id);
 
             if (usuario == null)

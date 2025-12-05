@@ -106,8 +106,6 @@ namespace JuegoAhorcado.Motor
             PalabraOculta = string.Join(" ", actual);
         }
 
-
-
         private void Finalizar()
         {
             PartidaFinalizada = true;
@@ -121,13 +119,6 @@ namespace JuegoAhorcado.Motor
         }
 
 
-        // Devuelve la palabra desenmascarada (útil al perder)
-        public string ObtenerPalabraRevelada()
-        {
-            return PalabraOriginal.Palabra.ToUpper();
-        }
-
-
         // Útil para el diseño del formulario (multilínea si hay espacios)
         public string ObtenerPalabraOcultaMultilinea()
         {
@@ -135,25 +126,20 @@ namespace JuegoAhorcado.Motor
             return string.Join(Environment.NewLine, sinEspacios.ToCharArray());
         }
 
-
-        // Punto único para obtener puntuación base
         public int ObtenerPuntuacion()
         {
-            if (!PalabraAcertada)
-                return 0;
+            int puntos = 0;
 
-            int puntosBase = PalabraOriginal.Palabra.Length * 10;
-            int penalizacion = Errores * 3;
+            if (PalabraAcertada)
+                puntos += 10;
+            else
+                puntos -= 5;
 
-            return Math.Max(0, puntosBase - penalizacion);
+            puntos += Aciertos * 2;
+            puntos -= Errores * 1;
+
+            return puntos;
         }
 
-
-        // Saber si la letra ya ha sido usada
-        public bool LetraYaIntentada(char letra)
-        {
-            letra = char.ToUpper(letra);
-            return LetrasProbadas.Contains(letra) || LetrasFalladas.Contains(letra);
-        }
     }
 }
