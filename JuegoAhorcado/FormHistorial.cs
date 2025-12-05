@@ -1,4 +1,7 @@
-﻿using System;
+﻿using JuegoAhorcado.Repositorios;
+using JuegoAhorcado.Servicios;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,17 +10,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using JuegoAhorcado.Servicios;
-using JuegoAhorcado.Repositorios;
 
 namespace JuegoAhorcado
 {
     public partial class FormHistorial : Form
     {
-        private ServicioSesionJugador sesion;
-        private RepositorioPartidas repoPartidas = new RepositorioPartidas();
-        private RepositorioPalabras repoPalabras = new RepositorioPalabras();
-        private RepositorioCategorias repoCategorias = new RepositorioCategorias();
+        private readonly ServicioSesionJugador sesion;
 
         public FormHistorial(ServicioSesionJugador sesion)
         {
@@ -27,58 +25,126 @@ namespace JuegoAhorcado
 
         private void FormHistorial_Load(object sender, EventArgs e)
         {
-            CargarHistorial();
+            try
+            {
+                dgvHistorial.AutoGenerateColumns = true;
+
+                CargarHistorial();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al iniciar el historial:\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
+
+        // ============================================================
+        //   CARGA DATOS DEL HISTORIAL
+        // ============================================================
         private void CargarHistorial()
         {
-            // Obtengo las partidas del usuario actual.
-            var partidas = repoPartidas.ObtenerPorUsuario(sesion.UsuarioActual.Id);
-
-            // Mapear datos para mostrarlos en la tabla
-            var datos = partidas.Select(p =>
+            try
             {
-                var palabra = repoPalabras.ObtenerPorId(p.PalabraId);
-                var categoria = repoCategorias.ObtenerPorId(palabra.CategoriaId);
-
-                return new
+                using (var conn = new ConexionBD().ObtenerConexion())
                 {
-                    Id = p.Id,
-                    Palabra = palabra.Palabra,
-                    Categoria = categoria.Nombre,
-                    Resultado = p.Resultado,
-                    Puntos = p.PuntuacionObtenida,
-                    Fecha = p.Fecha.ToString("dd/MM/yyyy HH:mm")
-                };
-            }).ToList();
+                    conn.Open();
 
-            dgvHistorial.DataSource = datos;
+                    string sql = @"
+                        SELECT 
+                            p.id AS ID_Partida,
+                            w.palabra AS Palabra,
+                            c.nombre AS Categoria,
+                            p.resultado AS Resultado,
+                            p.puntuacion_obtenida AS Puntos,
+                            DATE_FORMAT(p.fecha, '%d/%m/%Y %H:%i') AS Fecha
+                        FROM partidas p
+                        INNER JOIN palabras w ON w.id = p.palabra_id
+                        INNER JOIN categoria c ON c.id = w.categoria_id
+                        WHERE p.usuario_id = @idUser
+                        ORDER BY p.fecha DESC";
 
-            CalcularEstadisticas(partidas);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@idUser", sesion.UsuarioActual.Id);
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    DataTable tabla = new DataTable();
+                    da.Fill(tabla);
+
+                    dgvHistorial.DataSource = tabla;
+                }
+
+                CalcularEstadisticas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al cargar el historial:\n" + ex.Message,
+                    "Error de base de datos",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
-        private void CalcularEstadisticas(System.Collections.Generic.List<Modelos.HistorialPartida> lista)
+        // ============================================================
+        //   CALCULA ESTADÍSTICAS VISIBLES EN LOS LABELS
+        // ============================================================
+        private void CalcularEstadisticas()
         {
-            int total = lista.Count;
-            int ganadas = lista.Count(x => x.Resultado == "acertada");
-            int perdidas = total - ganadas;
+            try
+            {
+                int total = dgvHistorial.Rows.Count;
 
-            double porcentaje = (total > 0)
-                ? (ganadas * 100.0 / total)
-                : 0;
+                int ganadas = dgvHistorial.Rows
+                    .Cast<DataGridViewRow>()
+                    .Count(r =>
+                        r.Cells["Resultado"].Value != null &&
+                        r.Cells["Resultado"].Value.ToString().ToLower() == "acertada"
+                    );
 
-            lblTotalPartidas.Text = total.ToString();
-            lblGanadas.Text = ganadas.ToString();
-            lblPerdidas.Text = perdidas.ToString();
-            lblAcierto.Text = porcentaje.ToString("0.00") + "%";
-            lblRachaMaxima.Text = sesion.UsuarioActual.RachaMaxima.ToString();
+                int perdidas = total - ganadas;
+
+                double porcentaje = (total > 0)
+                    ? ganadas * 100.0 / total
+                    : 0;
+
+                lblTotalPartidas.Text = "Total partidas: " + total.ToString();
+                lblGanadas.Text = "Ganadas: " + ganadas.ToString();
+                lblPerdidas.Text = "Perdidad: " + perdidas.ToString();
+                lblAcierto.Text = "Acierto: " + porcentaje.ToString("0.00") + "%";
+                lblRachaMaxima.Text = "Racha Máxima: " + sesion.UsuarioActual.RachaMaxima.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al calcular estadísticas:\n" + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
         }
 
+        // ============================================================
+        //   BOTÓN VOLVER
+        // ============================================================
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            FormMenuPrincipal menu = new FormMenuPrincipal(sesion);
-            menu.Show();
-            this.Hide();
+            try
+            {
+                FormMenuPrincipal menu = new FormMenuPrincipal(sesion);
+                menu.Show();
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error al volver al menú.");
+            }
         }
     }
 }

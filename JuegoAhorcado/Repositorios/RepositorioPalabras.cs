@@ -5,196 +5,232 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace JuegoAhorcado.Repositorios
 {
     public class RepositorioPalabras
     {
-        private ConexionBD conexion = new ConexionBD();
+        private readonly ConexionBD conexion = new ConexionBD();
 
-        // ----------------------------------------------------------
-        // Obtener todas las palabras con el nombre de categoría
-        // (ideal para el DataGridView del panel de administración)
-        // ----------------------------------------------------------
+        // Obtener todas las palabras
         public List<EntradaPalabra> ObtenerTodas()
         {
             List<EntradaPalabra> lista = new List<EntradaPalabra>();
 
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-
-                string sql = @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
-                               FROM palabras p
-                               INNER JOIN categoria c ON c.id = p.categoria_id
-                               ORDER BY p.id";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                using (var conn = conexion.ObtenerConexion())
                 {
-                    EntradaPalabra palabra = new EntradaPalabra();
-                    palabra.Id = reader.GetInt32("id");
-                    palabra.Palabra = reader.GetString("palabra");
-                    palabra.CategoriaId = reader.GetInt32("categoria_id");
-                    palabra.CategoriaNombre = reader.GetString("categoria_nombre");
+                    conn.Open();
 
-                    lista.Add(palabra);
-                }
-            }
+                    string sql =
+                        @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
+                          FROM palabras p
+                          INNER JOIN categoria c ON c.id = p.categoria_id
+                          ORDER BY p.id";
 
-            return lista;
-        }
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
 
-        // ----------------------------------------------------------
-        // Obtener palabras filtradas por categoría
-        // ----------------------------------------------------------
-        public List<EntradaPalabra> ObtenerPorCategoria(int categoriaId)
-        {
-            List<EntradaPalabra> lista = new List<EntradaPalabra>();
-
-            using (var conn = conexion.ObtenerConexion())
-            {
-                conn.Open();
-
-                string sql = @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
-                               FROM palabras p
-                               INNER JOIN categoria c ON c.id = p.categoria_id
-                               WHERE p.categoria_id = @categoria_id
-                               ORDER BY p.id";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@categoria_id", categoriaId);
-
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    EntradaPalabra palabra = new EntradaPalabra();
-                    palabra.Id = reader.GetInt32("id");
-                    palabra.Palabra = reader.GetString("palabra");
-                    palabra.CategoriaId = reader.GetInt32("categoria_id");
-                    palabra.CategoriaNombre = reader.GetString("categoria_nombre");
-
-                    lista.Add(palabra);
-                }
-            }
-
-            return lista;
-        }
-
-        // ----------------------------------------------------------
-        // Obtener una palabra aleatoria dentro de la categoría (para el juego)
-        // ----------------------------------------------------------
-        public EntradaPalabra ObtenerAleatoria(int categoriaId)
-        {
-            var lista = ObtenerPorCategoria(categoriaId);
-
-            if (lista.Count == 0)
-                return null;
-
-            Random rnd = new Random();
-            return lista[rnd.Next(lista.Count)];
-        }
-
-        // ----------------------------------------------------------
-        // Obtener palabra por ID
-        // ----------------------------------------------------------
-        public EntradaPalabra ObtenerPorId(int id)
-        {
-            EntradaPalabra palabra = null;
-
-            using (var conn = conexion.ObtenerConexion())
-            {
-                conn.Open();
-
-                string sql = @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
-                               FROM palabras p
-                               INNER JOIN categoria c ON c.id = p.categoria_id
-                               WHERE p.id = @id";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
-
-                using (MySqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        palabra = new EntradaPalabra()
+                        lista.Add(new EntradaPalabra
                         {
                             Id = reader.GetInt32("id"),
                             Palabra = reader.GetString("palabra"),
                             CategoriaId = reader.GetInt32("categoria_id"),
                             CategoriaNombre = reader.GetString("categoria_nombre")
-                        };
+                        });
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener palabras:\n" + ex.Message);
+            }
 
-            return palabra;
+            return lista;
         }
 
-        // ----------------------------------------------------------
-        // Insertar palabra nueva
-        // ----------------------------------------------------------
+        // Obtener palabras por categoría
+        public List<EntradaPalabra> ObtenerPorCategoria(int categoriaId)
+        {
+            List<EntradaPalabra> lista = new List<EntradaPalabra>();
+
+            try
+            {
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
+
+                    string sql =
+                        @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
+                          FROM palabras p
+                          INNER JOIN categoria c ON c.id = p.categoria_id
+                          WHERE p.categoria_id = @categoria_id
+                          ORDER BY p.id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@categoria_id", categoriaId);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lista.Add(new EntradaPalabra
+                        {
+                            Id = reader.GetInt32("id"),
+                            Palabra = reader.GetString("palabra"),
+                            CategoriaId = reader.GetInt32("categoria_id"),
+                            CategoriaNombre = reader.GetString("categoria_nombre")
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener palabras por categoría:\n" + ex.Message);
+            }
+
+            return lista;
+        }
+
+        // Obtener palabra aleatoria
+        public EntradaPalabra ObtenerAleatoria(int categoriaId)
+        {
+            try
+            {
+                var lista = ObtenerPorCategoria(categoriaId);
+                if (lista.Count == 0) return null;
+
+                Random rnd = new Random();
+                return lista[rnd.Next(lista.Count)];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener palabra aleatoria:\n" + ex.Message);
+                return null;
+            }
+        }
+
+        // Obtener palabra por ID (CORREGIDO)
+        public EntradaPalabra ObtenerPorId(int id)
+        {
+            try
+            {
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
+
+                    string sql =
+                        @"SELECT p.id, p.palabra, p.categoria_id, c.nombre AS categoria_nombre
+                          FROM palabras p
+                          INNER JOIN categoria c ON c.id = p.categoria_id
+                          WHERE p.id = @id";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new EntradaPalabra
+                            {
+                                Id = reader.GetInt32("id"),
+                                Palabra = reader.GetString("palabra"),
+                                CategoriaId = reader.GetInt32("categoria_id"),
+                                CategoriaNombre = reader.GetString("categoria_nombre")
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener palabra por ID:\n" + ex.Message);
+            }
+
+            return null;
+        }
+
+        // Insertar
         public void Insertar(EntradaPalabra palabra)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                string sql = @"INSERT INTO palabras (palabra, categoria_id)
-                               VALUES (@palabra, @categoria_id)";
+                    string sql =
+                        @"INSERT INTO palabras (palabra, categoria_id)
+                          VALUES (@palabra, @categoria_id)";
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@palabra", palabra.Palabra);
-                cmd.Parameters.AddWithValue("@categoria_id", palabra.CategoriaId);
+                    cmd.Parameters.AddWithValue("@palabra", palabra.Palabra);
+                    cmd.Parameters.AddWithValue("@categoria_id", palabra.CategoriaId);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al insertar palabra:\n" + ex.Message);
             }
         }
 
-        // ----------------------------------------------------------
-        // Modificar palabra existente
-        // ----------------------------------------------------------
+        // Modificar
         public void Modificar(EntradaPalabra palabra)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                string sql = @"UPDATE palabras
-                               SET palabra = @palabra,
-                                   categoria_id = @categoria_id
-                               WHERE id = @id";
+                    string sql =
+                        @"UPDATE palabras
+                          SET palabra = @palabra, categoria_id = @categoria_id
+                          WHERE id = @id";
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                cmd.Parameters.AddWithValue("@id", palabra.Id);
-                cmd.Parameters.AddWithValue("@palabra", palabra.Palabra);
-                cmd.Parameters.AddWithValue("@categoria_id", palabra.CategoriaId);
+                    cmd.Parameters.AddWithValue("@id", palabra.Id);
+                    cmd.Parameters.AddWithValue("@palabra", palabra.Palabra);
+                    cmd.Parameters.AddWithValue("@categoria_id", palabra.CategoriaId);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al modificar palabra:\n" + ex.Message);
             }
         }
 
-        // ----------------------------------------------------------
-        // Eliminar palabra
-        // ----------------------------------------------------------
+        // Eliminar
         public void Eliminar(int id)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                string sql = "DELETE FROM palabras WHERE id = @id";
+                    string sql = "DELETE FROM palabras WHERE id = @id";
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar palabra:\n" + ex.Message);
             }
         }
     }

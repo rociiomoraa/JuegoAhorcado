@@ -60,7 +60,7 @@
             this.buttonComenzar.Font = new System.Drawing.Font("CF Crayons", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonComenzar.ForeColor = System.Drawing.SystemColors.Control;
             this.buttonComenzar.Location = new System.Drawing.Point(552, 395);
-            this.buttonComenzar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonComenzar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonComenzar.Name = "buttonComenzar";
             this.buttonComenzar.Size = new System.Drawing.Size(116, 30);
             this.buttonComenzar.TabIndex = 2;
@@ -98,15 +98,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(882, 531);
+            this.ClientSize = new System.Drawing.Size(890, 531);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.buttonComenzar);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormInicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bienvenido al ahorcado!";
+            this.Load += new System.EventHandler(this.FormInicio_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

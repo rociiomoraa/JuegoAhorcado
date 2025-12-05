@@ -24,6 +24,9 @@ namespace JuegoAhorcado
             this.Hide();
         }
 
-      
+        private void FormInicio_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -22,7 +22,6 @@ namespace JuegoAhorcado
 
         private int rachaVictorias = 0;
 
-
         public FormJuego(ServicioSesionJugador sesion)
         {
             InitializeComponent();
@@ -77,25 +76,33 @@ namespace JuegoAhorcado
         {
             if (cbCategorias.SelectedItem == null)
             {
-                MessageBox.Show("Debes seleccionar una categoría para comenzar la partida.",
-                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Debes seleccionar una categoría para comenzar la partida.",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // SOLUCIÓN DEFINITIVA PARA OBJETOS ANÓNIMOS
-            var item = cbCategorias.SelectedItem;
-            int categoriaId = (int)item.GetType().GetProperty("Id").GetValue(item, null);
+            // CORRECCIÓN: obtener categoría de forma segura
+            Categoria categoria = (Categoria)cbCategorias.SelectedItem;
+            int categoriaId = categoria.Id;
 
             palabraElegida = repoPalabras.ObtenerAleatoria(categoriaId);
 
             if (palabraElegida == null)
             {
-                MessageBox.Show("No hay palabras disponibles en esta categoría.",
-                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "No hay palabras disponibles en esta categoría.",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             juego = new MotorAhorcado(palabraElegida);
+
+            // Reset visual
+            lblAciertos.Text = "Aciertos: 0";
+            lblErrores.Text = "Errores: 0";
+            lblPuntuacion.Text = "Puntuación: 0";
+            lblPalabra.Text = "";
 
             ActivarTodasLasLetras();
             ActualizarPantalla();
@@ -109,16 +116,15 @@ namespace JuegoAhorcado
             else
                 lblPalabra.Text = juego.PalabraOculta;
 
-            lblAciertos.Text = "Aciertos: " + juego.Aciertos.ToString();
-            lblErrores.Text = "Errores: " + juego.Errores.ToString();
-            lblPuntuacion.Text = "Puntuación: " + juego.ObtenerPuntuacion().ToString();
+            lblAciertos.Text = "Aciertos: " + juego.Aciertos;
+            lblErrores.Text = "Errores: " + juego.Errores;
+            lblPuntuacion.Text = "Puntuación: " + juego.ObtenerPuntuacion();
 
             lblRachaActual.Text = "Racha actual: " + rachaVictorias;
             lblRachaMaxima.Text = "Racha máxima: " + sesion.UsuarioActual.RachaMaxima;
 
             panelDibujo.Invalidate();
         }
-
 
         private void panelDibujo_Paint(object sender, PaintEventArgs e)
         {
@@ -127,7 +133,6 @@ namespace JuegoAhorcado
 
             DibujarAhorcado(e.Graphics, juego.Errores);
         }
-
 
         private void DibujarAhorcado(Graphics g, int errores)
         {
@@ -175,6 +180,10 @@ namespace JuegoAhorcado
 
         private void FinalizarPartida()
         {
+            // BLOQUEAR TODAS LAS LETRAS
+            foreach (Control c in panelLetras.Controls)
+                if (c is Button btn) btn.Enabled = false;
+
             int puntuacionBase = juego.ObtenerPuntuacion();
             int bonusRacha = CalcularBonusRacha(rachaVictorias);
             int puntuacion = puntuacionBase + bonusRacha;
@@ -221,7 +230,8 @@ namespace JuegoAhorcado
             if (rachaVictorias >= 2 && juego.PalabraAcertada)
                 mensaje += "\nRacha actual de victorias: " + rachaVictorias;
 
-            MessageBox.Show(mensaje, "Fin de la partida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mensaje, "Fin de la partida",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             DialogResult opcion = MessageBox.Show(
                 "¿Quieres jugar otra vez o volver al menú principal?",
@@ -235,7 +245,7 @@ namespace JuegoAhorcado
             {
                 FormMenuPrincipal menu = new FormMenuPrincipal(sesion);
                 menu.Show();
-                this.Hide();
+                this.Close();   // CORRECCIÓN: cerrar, no ocultar
             }
         }
 
@@ -254,8 +264,8 @@ namespace JuegoAhorcado
             palabraElegida = null;
 
             lblPalabra.Text = "";
-            lblAciertos.Text = "Aciertos:";
-            lblErrores.Text = "Errores:";
+            lblAciertos.Text = "Aciertos: ";
+            lblErrores.Text = "Errores: ";
             lblPuntuacion.Text = "Puntuación: ";
 
             lblRachaActual.Text = "Racha actual: " + rachaVictorias;

@@ -14,10 +14,7 @@ namespace JuegoAhorcado
 {
     public partial class FormInicioSesion : Form
     {
-        // Servicio encargado de validar usuarios contra la base de datos.
         private ServicioUsuarios servicioUsuarios = new ServicioUsuarios();
-
-        // Servicio que mantiene al usuario logueado durante la aplicación.
         private ServicioSesionJugador servicioSesion = new ServicioSesionJugador();
 
         public FormInicioSesion()
@@ -25,12 +22,20 @@ namespace JuegoAhorcado
             InitializeComponent();
         }
 
+        private void FormInicioSesion_Load(object sender, EventArgs e)
+        {
+            // Permite iniciar sesión pulsando Enter
+            this.AcceptButton = btnEntrar;
+
+            // Ocultar la contraseña si no lo has hecho en el diseñador
+            txtContrasena.UseSystemPasswordChar = true;
+        }
+
         private void btnEntrar_Click(object sender, EventArgs e)
         {
             string nombre = txtUsuario.Text.Trim();
             string contrasena = txtContrasena.Text.Trim();
 
-            // Validación de campos vacíos
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(contrasena))
             {
                 MessageBox.Show("Introduce usuario y contraseña.",
@@ -38,7 +43,6 @@ namespace JuegoAhorcado
                 return;
             }
 
-            // Intento de inicio de sesión contra la base de datos
             Usuario usuario = servicioUsuarios.IniciarSesion(nombre, contrasena);
 
             if (usuario == null)
@@ -51,23 +55,19 @@ namespace JuegoAhorcado
             // Registrar la sesión activa
             servicioSesion.IniciarSesion(usuario);
 
-            // Abrir el menú principal y pasarle la sesión
+            // Abrir el menú principal
             FormMenuPrincipal menu = new FormMenuPrincipal(servicioSesion);
             menu.Show();
 
-            // Ocultar este formulario
-            this.Hide();
+            // Cerrar el formulario de inicio de sesión
+            this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
             FormInicio inicio = new FormInicio();
             inicio.Show();
-            this.Hide();
-        }
-
-        private void FormInicioSesion_Load(object sender, EventArgs e)
-        {
+            this.Close(); // en vez de Hide()
         }
     }
 }

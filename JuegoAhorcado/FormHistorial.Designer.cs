@@ -30,6 +30,11 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblRachaMaxima = new System.Windows.Forms.Label();
+            this.lblAcierto = new System.Windows.Forms.Label();
+            this.lblPerdidas = new System.Windows.Forms.Label();
+            this.lblGanadas = new System.Windows.Forms.Label();
+            this.lblTotalPartidas = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvHistorial = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,11 +43,6 @@
             this.Resultado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Puntos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblTotalPartidas = new System.Windows.Forms.Label();
-            this.lblGanadas = new System.Windows.Forms.Label();
-            this.lblPerdidas = new System.Windows.Forms.Label();
-            this.lblAcierto = new System.Windows.Forms.Label();
-            this.lblRachaMaxima = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -72,6 +72,66 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(831, 44);
             this.panel1.TabIndex = 3;
+            // 
+            // lblRachaMaxima
+            // 
+            this.lblRachaMaxima.AutoSize = true;
+            this.lblRachaMaxima.BackColor = System.Drawing.Color.Transparent;
+            this.lblRachaMaxima.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRachaMaxima.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblRachaMaxima.Location = new System.Drawing.Point(662, 17);
+            this.lblRachaMaxima.Name = "lblRachaMaxima";
+            this.lblRachaMaxima.Size = new System.Drawing.Size(102, 19);
+            this.lblRachaMaxima.TabIndex = 107;
+            this.lblRachaMaxima.Text = "Racha Máxima:";
+            // 
+            // lblAcierto
+            // 
+            this.lblAcierto.AutoSize = true;
+            this.lblAcierto.BackColor = System.Drawing.Color.Transparent;
+            this.lblAcierto.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAcierto.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblAcierto.Location = new System.Drawing.Point(508, 17);
+            this.lblAcierto.Name = "lblAcierto";
+            this.lblAcierto.Size = new System.Drawing.Size(59, 19);
+            this.lblAcierto.TabIndex = 106;
+            this.lblAcierto.Text = "Acierto:";
+            // 
+            // lblPerdidas
+            // 
+            this.lblPerdidas.AutoSize = true;
+            this.lblPerdidas.BackColor = System.Drawing.Color.Transparent;
+            this.lblPerdidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPerdidas.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblPerdidas.Location = new System.Drawing.Point(353, 17);
+            this.lblPerdidas.Name = "lblPerdidas";
+            this.lblPerdidas.Size = new System.Drawing.Size(66, 19);
+            this.lblPerdidas.TabIndex = 105;
+            this.lblPerdidas.Text = "Perdidas:";
+            // 
+            // lblGanadas
+            // 
+            this.lblGanadas.AutoSize = true;
+            this.lblGanadas.BackColor = System.Drawing.Color.Transparent;
+            this.lblGanadas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGanadas.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblGanadas.Location = new System.Drawing.Point(201, 17);
+            this.lblGanadas.Name = "lblGanadas";
+            this.lblGanadas.Size = new System.Drawing.Size(67, 19);
+            this.lblGanadas.TabIndex = 104;
+            this.lblGanadas.Text = "Ganadas:";
+            // 
+            // lblTotalPartidas
+            // 
+            this.lblTotalPartidas.AutoSize = true;
+            this.lblTotalPartidas.BackColor = System.Drawing.Color.Transparent;
+            this.lblTotalPartidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalPartidas.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblTotalPartidas.Location = new System.Drawing.Point(25, 17);
+            this.lblTotalPartidas.Name = "lblTotalPartidas";
+            this.lblTotalPartidas.Size = new System.Drawing.Size(108, 19);
+            this.lblTotalPartidas.TabIndex = 103;
+            this.lblTotalPartidas.Text = "Total Partidas:";
             // 
             // panel2
             // 
@@ -138,66 +198,6 @@
             this.Fecha.Name = "Fecha";
             this.Fecha.ReadOnly = true;
             // 
-            // lblTotalPartidas
-            // 
-            this.lblTotalPartidas.AutoSize = true;
-            this.lblTotalPartidas.BackColor = System.Drawing.Color.Transparent;
-            this.lblTotalPartidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalPartidas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTotalPartidas.Location = new System.Drawing.Point(25, 17);
-            this.lblTotalPartidas.Name = "lblTotalPartidas";
-            this.lblTotalPartidas.Size = new System.Drawing.Size(108, 19);
-            this.lblTotalPartidas.TabIndex = 103;
-            this.lblTotalPartidas.Text = "Total Partidas:";
-            // 
-            // lblGanadas
-            // 
-            this.lblGanadas.AutoSize = true;
-            this.lblGanadas.BackColor = System.Drawing.Color.Transparent;
-            this.lblGanadas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGanadas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblGanadas.Location = new System.Drawing.Point(201, 17);
-            this.lblGanadas.Name = "lblGanadas";
-            this.lblGanadas.Size = new System.Drawing.Size(67, 19);
-            this.lblGanadas.TabIndex = 104;
-            this.lblGanadas.Text = "Ganadas:";
-            // 
-            // lblPerdidas
-            // 
-            this.lblPerdidas.AutoSize = true;
-            this.lblPerdidas.BackColor = System.Drawing.Color.Transparent;
-            this.lblPerdidas.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPerdidas.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblPerdidas.Location = new System.Drawing.Point(353, 17);
-            this.lblPerdidas.Name = "lblPerdidas";
-            this.lblPerdidas.Size = new System.Drawing.Size(66, 19);
-            this.lblPerdidas.TabIndex = 105;
-            this.lblPerdidas.Text = "Perdidas:";
-            // 
-            // lblAcierto
-            // 
-            this.lblAcierto.AutoSize = true;
-            this.lblAcierto.BackColor = System.Drawing.Color.Transparent;
-            this.lblAcierto.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAcierto.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblAcierto.Location = new System.Drawing.Point(508, 17);
-            this.lblAcierto.Name = "lblAcierto";
-            this.lblAcierto.Size = new System.Drawing.Size(59, 19);
-            this.lblAcierto.TabIndex = 106;
-            this.lblAcierto.Text = "Acierto:";
-            // 
-            // lblRachaMaxima
-            // 
-            this.lblRachaMaxima.AutoSize = true;
-            this.lblRachaMaxima.BackColor = System.Drawing.Color.Transparent;
-            this.lblRachaMaxima.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRachaMaxima.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblRachaMaxima.Location = new System.Drawing.Point(662, 17);
-            this.lblRachaMaxima.Name = "lblRachaMaxima";
-            this.lblRachaMaxima.Size = new System.Drawing.Size(102, 19);
-            this.lblRachaMaxima.TabIndex = 107;
-            this.lblRachaMaxima.Text = "Racha Máxima:";
-            // 
             // btnVolver
             // 
             this.btnVolver.BackColor = System.Drawing.Color.Transparent;
@@ -216,6 +216,7 @@
             this.btnVolver.TabIndex = 102;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // FormHistorial
             // 

@@ -16,6 +16,10 @@ namespace JuegoAhorcado.Servicios
         {
             UsuarioActual = usuario;
         }
+        public void CerrarSesion()
+        {
+            UsuarioActual = null;
+        }
     }
 }
 

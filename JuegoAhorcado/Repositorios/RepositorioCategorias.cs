@@ -5,121 +5,181 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace JuegoAhorcado.Repositorios
 {
     public class RepositorioCategorias
     {
-        private ConexionBD conexion = new ConexionBD();
+        private readonly ConexionBD conexion = new ConexionBD();
 
         // ----------------------------------------------------------
-        // Obtener todas las categorías disponibles en la base de datos
+        // Obtener todas las categorías disponibles
         // ----------------------------------------------------------
         public List<Categoria> ObtenerTodas()
         {
             List<Categoria> lista = new List<Categoria>();
 
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-                string sql = "SELECT * FROM categoria ORDER BY id";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
+                using (var conn = conexion.ObtenerConexion())
                 {
-                    Categoria cat = new Categoria();
-                    cat.Id = reader.GetInt32("id");
-                    cat.Nombre = reader.GetString("nombre");
+                    conn.Open();
 
-                    lista.Add(cat);
+                    string sql = "SELECT * FROM categoria ORDER BY id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        lista.Add(new Categoria
+                        {
+                            Id = reader.GetInt32("id"),
+                            Nombre = reader.GetString("nombre")
+                        });
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al obtener categorías:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
             }
 
             return lista;
         }
 
         // ----------------------------------------------------------
-        // Obtener una categoría por su ID
+        // Obtener categoría por ID
         // ----------------------------------------------------------
         public Categoria ObtenerPorId(int id)
         {
             Categoria categoria = null;
 
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-                string sql = "SELECT * FROM categoria WHERE id = @id";
-
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
-
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                using (var conn = conexion.ObtenerConexion())
                 {
-                    if (reader.Read())
+                    conn.Open();
+
+                    string sql = "SELECT * FROM categoria WHERE id = @id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        categoria = new Categoria()
+                        if (reader.Read())
                         {
-                            Id = reader.GetInt32("id"),
-                            Nombre = reader.GetString("nombre")
-                        };
+                            categoria = new Categoria()
+                            {
+                                Id = reader.GetInt32("id"),
+                                Nombre = reader.GetString("nombre")
+                            };
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al obtener la categoría por ID:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
             }
 
             return categoria;
         }
 
         // ----------------------------------------------------------
-        // Insertar una nueva categoría
+        // Insertar nueva categoría
         // ----------------------------------------------------------
         public void Insertar(Categoria categoria)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-                string sql = "INSERT INTO categoria (nombre) VALUES (@nombre)";
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@nombre", categoria.Nombre);
+                    string sql = "INSERT INTO categoria (nombre) VALUES (@nombre)";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@nombre", categoria.Nombre);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al insertar categoría:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
             }
         }
 
         // ----------------------------------------------------------
-        // Modificar el nombre de una categoría existente
+        // Modificar categoría existente
         // ----------------------------------------------------------
         public void Modificar(Categoria categoria)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-                string sql = "UPDATE categoria SET nombre = @nombre WHERE id = @id";
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@nombre", categoria.Nombre);
-                cmd.Parameters.AddWithValue("@id", categoria.Id);
+                    string sql = "UPDATE categoria SET nombre = @nombre WHERE id = @id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@nombre", categoria.Nombre);
+                    cmd.Parameters.AddWithValue("@id", categoria.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al modificar la categoría:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
             }
         }
 
         // ----------------------------------------------------------
-        // Eliminar una categoría por su ID
+        // Eliminar categoría
         // ----------------------------------------------------------
         public void Eliminar(int id)
         {
-            using (var conn = conexion.ObtenerConexion())
+            try
             {
-                conn.Open();
-                string sql = "DELETE FROM categoria WHERE id = @id";
+                using (var conn = conexion.ObtenerConexion())
+                {
+                    conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
+                    string sql = "DELETE FROM categoria WHERE id = @id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", id);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex) when (ex.Number == 1451)
+            {
+                MessageBox.Show(
+                    "No se puede eliminar la categoría porque está siendo usada por palabras.",
+                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al eliminar la categoría:\n" + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error
+                );
             }
         }
     }

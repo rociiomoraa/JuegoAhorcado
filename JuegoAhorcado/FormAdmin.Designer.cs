@@ -37,8 +37,6 @@
             this.btnAnadirCat = new System.Windows.Forms.Button();
             this.lblCategorias = new System.Windows.Forms.Label();
             this.dgvCategorias = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Categoría = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cbElegirCategoria = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -48,15 +46,18 @@
             this.btnAnadirPalabra = new System.Windows.Forms.Button();
             this.lblPalabras = new System.Windows.Forms.Label();
             this.dgvPalabras = new System.Windows.Forms.DataGridView();
-            this.ID_Palabra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Palabra = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ID_Categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txtJugador = new System.Windows.Forms.TextBox();
+            this.lblJugador = new System.Windows.Forms.Label();
+            this.dgvJugadores = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategorias)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPalabras)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJugadores)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -65,7 +66,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("CF Crayons", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(230, 25);
+            this.label1.Location = new System.Drawing.Point(222, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(454, 45);
             this.label1.TabIndex = 1;
@@ -75,10 +76,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(21, 73);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(24, 73);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(836, 394);
+            this.tabControl1.Size = new System.Drawing.Size(836, 392);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 2;
             // 
@@ -91,11 +93,11 @@
             this.tabPage1.Controls.Add(this.btnAnadirCat);
             this.tabPage1.Controls.Add(this.lblCategorias);
             this.tabPage1.Controls.Add(this.dgvCategorias);
-            this.tabPage1.ForeColor = System.Drawing.Color.Transparent;
+            this.tabPage1.ForeColor = System.Drawing.Color.DimGray;
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(828, 368);
+            this.tabPage1.Size = new System.Drawing.Size(828, 366);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Categorías.";
             // 
@@ -184,9 +186,6 @@
             this.dgvCategorias.AllowUserToDeleteRows = false;
             this.dgvCategorias.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCategorias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCategorias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.Categoría});
             this.dgvCategorias.Location = new System.Drawing.Point(16, 56);
             this.dgvCategorias.MultiSelect = false;
             this.dgvCategorias.Name = "dgvCategorias";
@@ -195,18 +194,6 @@
             this.dgvCategorias.Size = new System.Drawing.Size(795, 254);
             this.dgvCategorias.TabIndex = 0;
             this.dgvCategorias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategorias_CellClick_1);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // Categoría
-            // 
-            this.Categoría.HeaderText = "Categoría";
-            this.Categoría.Name = "Categoría";
-            this.Categoría.ReadOnly = true;
             // 
             // tabPage2
             // 
@@ -219,10 +206,11 @@
             this.tabPage2.Controls.Add(this.btnAnadirPalabra);
             this.tabPage2.Controls.Add(this.lblPalabras);
             this.tabPage2.Controls.Add(this.dgvPalabras);
+            this.tabPage2.ForeColor = System.Drawing.Color.DimGray;
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(828, 368);
+            this.tabPage2.Size = new System.Drawing.Size(828, 357);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Palabras";
             // 
@@ -333,10 +321,6 @@
             this.dgvPalabras.AllowUserToDeleteRows = false;
             this.dgvPalabras.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPalabras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPalabras.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID_Palabra,
-            this.Palabra,
-            this.ID_Categoria});
             this.dgvPalabras.Location = new System.Drawing.Point(19, 51);
             this.dgvPalabras.MultiSelect = false;
             this.dgvPalabras.Name = "dgvPalabras";
@@ -346,23 +330,53 @@
             this.dgvPalabras.TabIndex = 110;
             this.dgvPalabras.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPalabras_CellClick_1);
             // 
-            // ID_Palabra
+            // tabPage3
             // 
-            this.ID_Palabra.HeaderText = "ID";
-            this.ID_Palabra.Name = "ID_Palabra";
-            this.ID_Palabra.ReadOnly = true;
+            this.tabPage3.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.tabPage3.Controls.Add(this.txtJugador);
+            this.tabPage3.Controls.Add(this.lblJugador);
+            this.tabPage3.Controls.Add(this.dgvJugadores);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(828, 357);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Jugadores";
             // 
-            // Palabra
+            // txtJugador
             // 
-            this.Palabra.HeaderText = "Palabra";
-            this.Palabra.Name = "Palabra";
-            this.Palabra.ReadOnly = true;
+            this.txtJugador.Location = new System.Drawing.Point(170, 17);
+            this.txtJugador.Name = "txtJugador";
+            this.txtJugador.Size = new System.Drawing.Size(221, 20);
+            this.txtJugador.TabIndex = 115;
+            this.txtJugador.TextChanged += new System.EventHandler(this.txtJugador_TextChanged);
             // 
-            // ID_Categoria
+            // lblJugador
             // 
-            this.ID_Categoria.HeaderText = "Categoría";
-            this.ID_Categoria.Name = "ID_Categoria";
-            this.ID_Categoria.ReadOnly = true;
+            this.lblJugador.AutoSize = true;
+            this.lblJugador.BackColor = System.Drawing.Color.Transparent;
+            this.lblJugador.Font = new System.Drawing.Font("CF Crayons", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblJugador.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblJugador.Location = new System.Drawing.Point(15, 18);
+            this.lblJugador.Name = "lblJugador";
+            this.lblJugador.Size = new System.Drawing.Size(140, 19);
+            this.lblJugador.TabIndex = 111;
+            this.lblJugador.Text = "Nombre del jugador:";
+            this.lblJugador.Click += new System.EventHandler(this.lblJugador_Click);
+            // 
+            // dgvJugadores
+            // 
+            this.dgvJugadores.AllowUserToAddRows = false;
+            this.dgvJugadores.AllowUserToDeleteRows = false;
+            this.dgvJugadores.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvJugadores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvJugadores.Location = new System.Drawing.Point(19, 54);
+            this.dgvJugadores.MultiSelect = false;
+            this.dgvJugadores.Name = "dgvJugadores";
+            this.dgvJugadores.ReadOnly = true;
+            this.dgvJugadores.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvJugadores.Size = new System.Drawing.Size(795, 272);
+            this.dgvJugadores.TabIndex = 110;
+            this.dgvJugadores.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvJugadores_CellContentClick);
             // 
             // btnVolver
             // 
@@ -405,6 +419,9 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPalabras)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvJugadores)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,19 +438,18 @@
         private System.Windows.Forms.Button btnAnadirCat;
         private System.Windows.Forms.TextBox txtCategorias;
         private System.Windows.Forms.Label lblCategorias;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Categoría;
         private System.Windows.Forms.TextBox txtPalabra;
         private System.Windows.Forms.Button btnEliminarPalabra;
         private System.Windows.Forms.Button btnModificarPalabra;
         private System.Windows.Forms.Button btnAnadirPalabra;
         private System.Windows.Forms.Label lblPalabras;
         private System.Windows.Forms.DataGridView dgvPalabras;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID_Palabra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Palabra;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID_Categoria;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.ComboBox cbElegirCategoria;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TextBox txtJugador;
+        private System.Windows.Forms.Label lblJugador;
+        private System.Windows.Forms.DataGridView dgvJugadores;
     }
 }
